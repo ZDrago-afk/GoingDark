@@ -8,7 +8,7 @@
     <div class="container">
         <header class="header">
             <h1 class="title">GoingDark</h1>
-            <p class="subtitle">Surveillance Simulator</p>
+            <p class="subtitle">Surveillance Mode Simulator</p>
             <div class="mode-indicator">READY</div>
         </header>
 
@@ -16,24 +16,24 @@
             <button class="btn-mode" data-mode="green">
                 <span class="btn-icon">🟢</span>
                 <span class="btn-text">
-                    <strong>Green Vision</strong>
-                    <small>Night vision with scan lines</small>
+                    <strong>Green Zone</strong>
+                    <small>Night vision with green filter and scan lines</small>
                 </span>
             </button>
 
             <button class="btn-mode" data-mode="bw">
                 <span class="btn-icon">⚫</span>
                 <span class="btn-text">
-                    <strong>TV Static</strong>
-                    <small>Black & white with noise</small>
+                    <strong>Static Feed</strong>
+                    <small>Pure Black & White with TV noise</small>
                 </span>
             </button>
 
             <button class="btn-mode" data-mode="cyan">
                 <span class="btn-icon">🔵</span>
                 <span class="btn-text">
-                    <strong>Cyber Grid</strong>
-                    <small>Cyan with scanning line</small>
+                    <strong>Cyber Scan</strong>
+                    <small>Cyan/Blue monochrome with data grid</small>
                 </span>
             </button>
 
@@ -42,17 +42,28 @@
             <button class="btn-mode" id="btn-off">
                 <span class="btn-icon">⭕</span>
                 <span class="btn-text">
-                    <strong>Turn Off</strong>
-                    <small>Disable all effects</small>
+                    <strong>Go Light</strong>
+                    <small>Disable all effects and restore normal view</small>
                 </span>
             </button>
         </main>
 
         <footer class="footer">
+            <div class="disclaimer-box">
+                <strong>⚠️ SECURITY & PRIVACY</strong>
+                <p class="disclaimer-text">
+                    This extension only applies visual CSS filters. It does NOT read, modify, or transmit any page data, history, or personal information. All effects are visual only.
+                </p>
+            </div>
+            
             <div class="status-indicator">
                 <div class="status-dot"></div>
                 <span class="status-text">Extension Ready</span>
             </div>
+            
+            <p class="hint">
+                <em>Toggle between three unique surveillance camera effects</em>
+            </p>
         </footer>
     </div>
 
