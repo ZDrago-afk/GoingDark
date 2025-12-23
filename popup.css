@@ -1,0 +1,106 @@
+/* Keep ALL your existing popup.css EXCEPT remove: */
+/* 
+1. Remove .spotlight-info section
+2. Remove .btn-badge
+3. Remove complex animations if causing issues
+*/
+
+/* Or use this minimal version: */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background: #0a0a0a;
+    color: white;
+    width: 300px;
+}
+
+.container {
+    padding: 15px;
+}
+
+.title {
+    color: #0af575;
+    margin: 0 0 5px 0;
+}
+
+.subtitle {
+    color: #888;
+    margin: 0 0 15px 0;
+    font-size: 12px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-mode {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid #333;
+    border-left: 4px solid #333;
+    cursor: pointer;
+    text-align: left;
+}
+
+[data-mode="green"] {
+    border-left-color: #0af575;
+}
+
+[data-mode="bw"] {
+    border-left-color: #888;
+}
+
+[data-mode="cyan"] {
+    border-left-color: #0ff;
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+.btn-text strong {
+    display: block;
+    font-size: 14px;
+}
+
+.btn-text small {
+    font-size: 11px;
+    color: #aaa;
+    display: block;
+}
+
+#btn-off {
+    border-left-color: #ff4757;
+    margin-top: 10px;
+}
+
+.divider {
+    height: 1px;
+    background: #333;
+    margin: 10px 0;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff4757;
+}
+
+.status-dot.active {
+    background: #0af575;
+}

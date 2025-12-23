@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">GoingDark</h1>
+            <p class="subtitle">Surveillance Simulator</p>
+            <div class="mode-indicator">READY</div>
+        </header>
+
+        <main class="controls">
+            <button class="btn-mode" data-mode="green">
+                <span class="btn-icon">🟢</span>
+                <span class="btn-text">
+                    <strong>Green Vision</strong>
+                    <small>Night vision with scan lines</small>
+                </span>
+            </button>
+
+            <button class="btn-mode" data-mode="bw">
+                <span class="btn-icon">⚫</span>
+                <span class="btn-text">
+                    <strong>TV Static</strong>
+                    <small>Black & white with noise</small>
+                </span>
+            </button>
+
+            <button class="btn-mode" data-mode="cyan">
+                <span class="btn-icon">🔵</span>
+                <span class="btn-text">
+                    <strong>Cyber Grid</strong>
+                    <small>Cyan with scanning line</small>
+                </span>
+            </button>
+
+            <div class="divider"></div>
+
+            <button class="btn-mode" id="btn-off">
+                <span class="btn-icon">⭕</span>
+                <span class="btn-text">
+                    <strong>Turn Off</strong>
+                    <small>Disable all effects</small>
+                </span>
+            </button>
+        </main>
+
+        <footer class="footer">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span class="status-text">Extension Ready</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
