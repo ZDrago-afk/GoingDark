@@ -1,72 +1,124 @@
-// popup.js - SIMPLE WORKING VERSION
-document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.btn-mode[data-mode]');
+// popup.js - GoingDark Popup Controller (No Spotlight)
+document.addEventListener('DOMContentLoaded', function() {
+    const modeButtons = document.querySelectorAll('.btn-mode[data-mode]');
     const offButton = document.getElementById('btn-off');
     const statusDot = document.querySelector('.status-dot');
     const statusText = document.querySelector('.status-text');
     const modeIndicator = document.querySelector('.mode-indicator');
     
     let currentMode = null;
-    
-    function sendCommand(command, mode = null) {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            if (tabs[0]?.id) {
-                chrome.tabs.sendMessage(tabs[0].id, {command, mode}, (response) => {
+
+    // Function to send command to active tab
+    function sendCommandToTab(command, mode = null) {
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            if (tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, { command, mode }, function(response) {
                     if (chrome.runtime.lastError) {
-                        console.log('Error:', chrome.runtime.lastError.message);
-                        // Try to inject content script
-                        chrome.scripting.executeScript({
-                            target: {tabId: tabs[0].id},
-                            files: ['content.js']
-                        }).then(() => {
-                            // Retry after injection
-                            setTimeout(() => {
-                                chrome.tabs.sendMessage(tabs[0].id, {command, mode});
-                            }, 500);
-                        });
+                        console.log('Content script not ready, injecting...');
+                        // Content script should auto-inject, but we can retry
+                        setTimeout(() => {
+                            chrome.tabs.sendMessage(tabs[0].id, { command, mode });
+                        }, 100);
                     }
                 });
             }
         });
     }
-    
-    function updateUI(mode) {
-        currentMode = mode;
+
+    // Update UI to show active mode
+    function updateUIMode(activeMode) {
+        currentMode = activeMode;
         
-        // Update buttons
-        buttons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-mode') === mode) {
-                btn.classList.add('active');
-            }
-        });
+        // Remove active class from all buttons
+        modeButtons.forEach(btn => btn.classList.remove('active'));
         
-        // Update status
+        // Add active class to clicked button
+        if (activeMode) {
+            const activeBtn = document.querySelector(`[data-mode="${activeMode}"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+        
+        // Update status indicator
         if (statusDot) {
-            statusDot.classList.toggle('active', !!mode);
+            statusDot.classList.toggle('active', !!activeMode);
+            if (activeMode) {
+                const color = activeMode === 'green' ? '#0af575' : 
+                            activeMode === 'bw' ? '#ccc' : '#0ff';
+                statusDot.style.backgroundColor = color;
+            }
         }
         
+        // Update status text
         if (statusText) {
-            statusText.textContent = mode ? `ACTIVE: ${mode.toUpperCase()}` : 'READY';
+            if (activeMode) {
+                const modeNames = {
+                    'green': 'Green Night Vision Active',
+                    'bw': 'Black & White Static Active',
+                    'cyan': 'Cyber Scan Active'
+                };
+                statusText.textContent = modeNames[activeMode];
+                statusText.style.color = activeMode === 'green' ? '#0af575' : 
+                                       activeMode === 'bw' ? '#ccc' : '#0ff';
+            } else {
+                statusText.textContent = 'Extension Ready';
+                statusText.style.color = '#aaa';
+            }
         }
         
+        // Update mode indicator
         if (modeIndicator) {
-            modeIndicator.textContent = mode ? `${mode.toUpperCase()} MODE` : 'READY';
+            if (activeMode) {
+                const modeDisplay = {
+                    'green': 'GREEN MODE',
+                    'bw': 'B&W MODE',
+                    'cyan': 'CYBER MODE'
+                };
+                modeIndicator.textContent = modeDisplay[activeMode];
+                modeIndicator.style.color = activeMode === 'green' ? '#0af575' : 
+                                          activeMode === 'bw' ? '#ccc' : '#0ff';
+            } else {
+                modeIndicator.textContent = 'READY';
+                modeIndicator.style.color = '#888';
+            }
         }
     }
-    
-    // Button events
-    buttons.forEach(button => {
+
+    // Add event listeners to mode buttons
+    modeButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const mode = button.getAttribute('data-mode');
-            sendCommand('applyMode', mode);
-            updateUI(mode);
+            const selectedMode = button.getAttribute('data-mode');
+            
+            // If clicking the already active mode, turn it off
+            if (currentMode === selectedMode) {
+                sendCommandToTab('reset');
+                updateUIMode(null);
+            } else {
+                sendCommandToTab('applyMode', selectedMode);
+                updateUIMode(selectedMode);
+            }
         });
     });
-    
-    // Off button
+
+    // Add event listener to OFF button
     offButton.addEventListener('click', () => {
-        sendCommand('reset');
-        updateUI(null);
+        sendCommandToTab('reset');
+        updateUIMode(null);
+    });
+
+    // Check current page state on popup open
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        if (tabs[0]) {
+            // Try to get status from content script
+            chrome.tabs.sendMessage(tabs[0].id, 
+                {command: "getStatus"}, 
+                function(response) {
+                    if (response && response.activeMode) {
+                        updateUIMode(response.activeMode);
+                    } else {
+                        updateUIMode(null);
+                    }
+                }
+            );
+        }
     });
 });
