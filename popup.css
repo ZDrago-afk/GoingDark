@@ -1,106 +1,412 @@
-/* Keep ALL your existing popup.css EXCEPT remove: */
-/* 
-1. Remove .spotlight-info section
-2. Remove .btn-badge
-3. Remove complex animations if causing issues
-*/
+/* ============================================
+   GOINGDARK - SURVEILLANCE MODE SIMULATOR
+   Popup Interface Styling
+   Version: 2.0.0 (Simplified Edition)
+============================================== */
 
-/* Or use this minimal version: */
+/* === BASE STYLES === */
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
     margin: 0;
     background: #0a0a0a;
-    color: white;
-    width: 300px;
+    color: #f0f0f0;
+    width: 380px;
+    min-height: 520px;
+    max-height: 600px; /* Maximum height before scrolling */
+    overflow-x: hidden;
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
+/* Container */
 .container {
-    padding: 15px;
+    padding: 0;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
 }
 
+/* === HEADER SECTION === */
+.header {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    padding: 25px 25px 20px 25px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Title styling */
 .title {
     color: #0af575;
-    margin: 0 0 5px 0;
+    margin: 0 0 8px 0;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 15px rgba(10, 245, 117, 0.3);
+    position: relative;
+    z-index: 2;
 }
 
 .subtitle {
     color: #888;
-    margin: 0 0 15px 0;
-    font-size: 12px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
 }
 
+/* Mode indicator */
+.mode-indicator {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: rgba(10, 245, 117, 0.1);
+    border: 1px solid rgba(10, 245, 117, 0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    color: #0af575;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* === MAIN CONTROLS SECTION === */
 .controls {
+    padding: 25px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 16px;
+    background: rgba(15, 15, 15, 0.95);
+    overflow-y: auto; /* Enable scrolling in controls area */
+    min-height: 200px; /* Minimum height */
 }
 
+/* Mode buttons */
 .btn-mode {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px;
-    background: #1a1a1a;
-    color: white;
-    border: 1px solid #333;
-    border-left: 4px solid #333;
-    cursor: pointer;
+    gap: 18px;
+    width: 100%;
+    padding: 18px 22px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+    color: #f0f0f0;
     text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    flex-shrink: 0; /* Prevent buttons from shrinking */
 }
 
-[data-mode="green"] {
-    border-left-color: #0af575;
+.btn-mode:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    border-color: #444;
+    background: linear-gradient(135deg, #222 0%, #2a2a2a 100%);
 }
 
-[data-mode="bw"] {
-    border-left-color: #888;
+.btn-mode:active {
+    transform: translateY(0);
+    transition: transform 0.1s;
 }
 
-[data-mode="cyan"] {
-    border-left-color: #0ff;
-}
-
+/* Button icons */
 .btn-icon {
-    font-size: 20px;
+    font-size: 28px;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Button text container */
+.btn-text {
+    flex-grow: 1;
+    line-height: 1.5;
+    min-width: 0;
 }
 
 .btn-text strong {
     display: block;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.3px;
 }
 
 .btn-text small {
-    font-size: 11px;
     color: #aaa;
+    font-size: 12px;
     display: block;
+    line-height: 1.4;
 }
 
-#btn-off {
-    border-left-color: #ff4757;
-    margin-top: 10px;
+/* Mode-specific styling */
+
+/* GREEN ZONE */
+[data-mode="green"] {
+    border-left: 4px solid #0af575;
 }
 
+[data-mode="green"] .btn-icon {
+    background: rgba(10, 245, 117, 0.15);
+    border-color: rgba(10, 245, 117, 0.3);
+    color: #0af575;
+}
+
+[data-mode="green"] .btn-text strong {
+    color: #0af575;
+}
+
+[data-mode="green"] .btn-text small {
+    color: #8af5a8;
+}
+
+/* STATIC FEED (Black & White) */
+[data-mode="bw"] {
+    border-left: 4px solid #888;
+}
+
+[data-mode="bw"] .btn-icon {
+    background: rgba(136, 136, 136, 0.15);
+    border-color: rgba(136, 136, 136, 0.3);
+    color: #ccc;
+}
+
+[data-mode="bw"] .btn-text strong {
+    color: #ccc;
+}
+
+[data-mode="bw"] .btn-text small {
+    color: #aaa;
+}
+
+/* CYBER SCAN */
+[data-mode="cyan"] {
+    border-left: 4px solid #00ffff;
+}
+
+[data-mode="cyan"] .btn-icon {
+    background: rgba(0, 255, 255, 0.15);
+    border-color: rgba(0, 255, 255, 0.3);
+    color: #0ff;
+}
+
+[data-mode="cyan"] .btn-text strong {
+    color: #0ff;
+}
+
+[data-mode="cyan"] .btn-text small {
+    color: #a0ffff;
+}
+
+/* === DIVIDER === */
 .divider {
     height: 1px;
-    background: #333;
-    margin: 10px 0;
+    background: linear-gradient(90deg, transparent, #333, transparent);
+    margin: 25px 0;
+    position: relative;
+    flex-shrink: 0; /* Prevent divider from shrinking */
 }
 
+.divider::before {
+    content: "•••";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #0a0a0a;
+    padding: 0 15px;
+    color: #666;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+/* === OFF BUTTON (Special Styling) === */
+#btn-off {
+    border-left: 4px solid #ff4757;
+    background: linear-gradient(135deg, #2a0a0a 0%, #3a0a0a 100%);
+    margin-top: 10px;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+#btn-off:hover {
+    background: linear-gradient(135deg, #3a0a0a 0%, #4a0a0a 100%);
+    border-color: #ff6b6b;
+}
+
+#btn-off .btn-icon {
+    background: rgba(255, 71, 87, 0.15);
+    border-color: rgba(255, 71, 87, 0.3);
+    color: #ff4757;
+}
+
+#btn-off .btn-text strong {
+    color: #ff6b6b;
+}
+
+#btn-off .btn-text small {
+    color: #ff9999;
+}
+
+/* === FOOTER SECTION === */
+.footer {
+    padding: 25px;
+    background: rgba(10, 10, 10, 0.95);
+    border-top: 1px solid #222;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+/* Disclaimer box */
+.disclaimer-box {
+    background: rgba(17, 17, 17, 0.9);
+    padding: 18px;
+    border-radius: 10px;
+    border-left: 3px solid #ffa500;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.disclaimer-box strong {
+    color: #ffa500;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.disclaimer-text {
+    color: #bbb;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Status indicator */
 .status-indicator {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 12px;
+    gap: 12px;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #ff4757;
+    transition: all 0.3s ease;
 }
 
 .status-dot.active {
     background: #0af575;
+    box-shadow: 0 0 10px #0af575;
+}
+
+.status-text {
+    font-size: 13px;
+    color: #aaa;
+    flex-grow: 1;
+}
+
+/* Hint text */
+.hint {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+    font-size: 11px;
+    margin: 15px 0 0 0;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    border: 1px dashed #333;
+}
+
+/* === ACTIVE STATE INDICATORS === */
+.btn-mode.active {
+    box-shadow: 0 0 0 2px currentColor, 0 8px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #222 0%, #2a2a2a 100%);
+}
+
+[data-mode="green"].active {
+    box-shadow: 0 0 0 2px #0af575, 0 8px 20px rgba(10, 245, 117, 0.2);
+}
+
+[data-mode="bw"].active {
+    box-shadow: 0 0 0 2px #ccc, 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+[data-mode="cyan"].active {
+    box-shadow: 0 0 0 2px #0ff, 0 8px 20px rgba(0, 255, 255, 0.2);
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-height: 600px) {
+    body {
+        max-height: 500px; /* Reduce max height on smaller screens */
+    }
+    
+    .header {
+        padding: 20px 25px 15px 25px;
+    }
+    
+    .controls {
+        padding: 20px;
+        gap: 12px;
+        max-height: 280px; /* Adjust controls height */
+    }
+    
+    .btn-mode {
+        padding: 15px 20px;
+    }
+    
+    .footer {
+        padding: 20px;
+    }
+}
+
+/* === SCROLLBAR STYLING === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+/* === SCROLLING FIXES === */
+/* Make sure scrollbar appears properly */
+html, body {
+    scrollbar-width: thin;
+    scrollbar-color: #333 #1a1a1a;
+}
+
+/* Ensure content doesn't overflow horizontally */
+* {
+    box-sizing: border-box;
 }
